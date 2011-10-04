@@ -1,0 +1,10 @@
+{
+	"id": "com.ubecake.contraption",
+	"version": "1.0.0",
+	"vendor": "UbeCake",
+	"type": "web",
+	"main": "index.html",
+	"title": "Contraption",
+	"icon": "icon.png",
+	"uiRevision": "2"
+}
