@@ -3,16 +3,8 @@ enyo.kind({
     components: [
         {name: "contraptionContainer", kind: "Pane",
         components: [
-            {name: "initialSetup", kind: "Pane",
-            components: [
-                {kind: "Button", caption: "OK"},
-                {kind: "Button", caption: "Cancel"}
-            ]},
-            {name: "mainScreen", kind: "Pane",
-            components: [
-                {kind: "Button", caption: "Main"},
-                {kind: "Button", caption: "Screen"}
-            ]},
+            {name: "initialSetup", kind: "UbeCake.InitialSetup"},
+            {name: "mainScreen", kind: "UbeCake.MainScreen"}
         ]}
     ],
     create: function() {
