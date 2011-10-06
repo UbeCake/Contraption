@@ -3,7 +3,6 @@ enyo.kind({
     components: [
         {name: "contraptionContainer", kind: "Pane",
         components: [
-            {name: "initialSetup", kind: "UbeCake.InitialSetup"},
             {name: "mainScreen", kind: "UbeCake.MainScreen"}
         ]}
     ],
@@ -11,6 +10,6 @@ enyo.kind({
         this.inherited(arguments);
     },
     ready: function() {
-        this.$.contraptionContainer.selectViewByName("initialSetup");
+        this.$.contraptionContainer.selectViewByName("mainScreen");
     },
 });
