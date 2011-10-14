@@ -1,17 +1,29 @@
 enyo.kind({
     name: "UbeCake.InitialSetup", kind: "ModalDialog", style: "width: 600px",
+    events: {
+        onReceive: "",
+        onSave: "",
+        onCancel: ""
+    },
+    published: {
+        defaultPlayDuration: "60",
+        defaultEnforcePlayTimer: false,
+        defaultRoundDuration: "0",
+        defaultEnforceRoundTimer: false,
+        defaultPlayerOneHealth: "20",
+        defaultPlayerTwoHealth: "20"
+    },
     components: [
-         {kind: "PageHeader",
-         components: [
-             {content: "Initial Setup", flex: 1},
-             {name: "resetButton", kind: "Button", className: "enyo-button-negative", content: "Reset to Defaults", onclick: "resetToDefaults"}
-         ]},
+        {name: "getPreferencesCall", kind: "PalmService", service: "palm://com.palm.systemservice/",
+            method: "getPreferences", onSuccess: "getPreferencesSuccess", onFailure: "getPreferencesFailure"},
+        {name: "setPreferencesCall", kind: "PalmService", service: "palm://com.palm.systemservice/",
+            method: "setPreferences", onSuccess: "setPreferencesSuccess", onFailure: "setPreferencesFailure"},
         {kind: "RowGroup", caption: "Play/Turn Timing Options", 
         components: [
             {kind: "HFlexBox", align: "center",
             components: [
                 {content: "Amount of time per turn", flex: 1},
-                {name: "playDuration", kind: "Picker", value: "0",
+                {name: "playDuration", kind: "Picker", value: "60",
                     onChange: "setPlayDuration",
                     items: [
                         {caption: "Do not use a play timer", value: "0"},
@@ -92,11 +104,65 @@ enyo.kind({
                 ]}
             ]},
         ]},
-        {kind: "Button", caption: "Huzzah! Let the duel commence!", className: "enyo-button-affirmative", 
-            onclick: "loadMainScreen"}
+        {kind: "HFlexBox", align: "center",
+        components: [
+            {kind: "Button", caption: "Huzzah! Let the duel commence!", className: "enyo-button-affirmative", 
+                onclick: "loadMainScreen", flex: 1},
+            {name: "resetButton", kind: "Button", className: "enyo-button-negative", caption: "Reset to Defaults",
+                onclick: "resetToDefaults"}
+        ]},
     ],
+    rendered: function() {
+      this.inherited(arguments);
+      this.$.getPreferencesCall.call({
+          "keys": ["playDuration", "enforcePlayTimer", "roundDuration", "enforceRoundTimer", "playerOneHealth", "playerTwoHealth"]
+      });
+      this.playDuration = "";
+      this.enforcePlayTimer = "";
+      this.roundDuration = "";
+      this.enforceRoundTimer = "";
+      this.playerOneHealth = "";
+      this.playerTwoHealth = "";
+    },
+    getPreferencesSuccess: function(inSender, inResponse) {
+        this.$.playDuration.setValue( inResponse.playDuration != "" ? inResponse.playDuration : this.defaultPlayDuration );
+        this.$.enforcePlayTimer.setState( inResponse.enforcePlayTimer != "" ? inResponse.enforcePlayTimer : this.defaultEnforcePlayTimer );
+        this.$.roundDuration.setValue( inResponse.roundDuration != "" ? inResponse.roundDuration : this.defaultRoundDuration );
+        this.$.enforceRoundTimer.setState( inResponse.enforceRoundTimer != "" ? inResponse.enforceRoundTimer : this.defaultEnforceRoundTimer );
+        this.$.playerOneHealth.setValue( inResponse.playerOneHealth != "" ? inResponse.playerOneHealth : this.defaultPlayerOneHealth );
+        this.$.playerTwoHealth.setValue( inResponse.playerTwoHealth != "" ? inResponse.playerTwoHealth : this.defaultPlayerTwoHealth );
+        
+        this.doReceive( inResponse.playDuration, inResponse.enforcePlayTimer, inResponse.roundDuration, inResponse.enforceRoundTimer,
+            inResponse.playerOneHealth, inResponse.playerTwoHealth );
+    },
+    getPreferencesFailure: function(inSender, inResponse) {
+        enyo.log( "got failure from getPreferences" );
+    },
+    setPreferencesSuccess: function(inSender, inResponse) {
+        enyo.log( "got success from setPreferences" );
+    },
+    setPreferencesFailure: function(inSender, inResponse) {
+        enyo.log( "got failure from setPreferences" );
+    },
+    resetToDefaults: function() {
+        this.$.playDuration.setValue( this.defaultPlayDuration );
+        this.$.enforcePlayTimer.setState( this.defaultEnforcePlayTimer );
+        this.$.roundDuration.setValue( this.defaultRoundDuration );
+        this.$.enforceRoundTimer.setState( this.defaultEnforceRoundTimer );
+        this.$.playerOneHealth.setValue( this.defaultPlayerOneHealth );
+        this.$.playerTwoHealth.setValue( this.defaultPlayerTwoHealth );
+    },
     loadMainScreen: function() {
-        enyo.log( "do stuff here" );
-        this.owner.$.initialSetup.close();
+        this.$.setPreferencesCall.call({
+           "playDuration": this.$.playDuration.getValue(),
+           "enforcePlayTimer": this.$.enforcePlayTimer.getState(),
+           "roundDuration": this.$.roundDuration.getValue(),
+           "enforceRoundTimer": this.$.enforceRoundTimer.getState(),
+           "playerOneHealth": this.$.playerOneHealth.getValue(),
+           "playerTwoHealth": this.$.playerTwoHealth.getValue()
+        });
+        
+        this.doSave( this.$.playDuration.getValue(), this.$.enforcePlayTimer.getState(), this.$.roundDuration.getValue(),
+            this.$.enforceRoundTimer.getState(), this.$.playerOneHealth.getValue(), this.$.playerTwoHealth.getValue() );
     }
 });
