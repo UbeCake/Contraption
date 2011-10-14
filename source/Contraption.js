@@ -3,7 +3,7 @@ enyo.kind({
     components: [
         {name: "contraptionContainer", kind: "Pane",
         components: [
-            {name: "mainScreen", kind: "UbeCake.MainScreen"}
+            {name: "mainScreen", kind: "Contraption.MainScreen"}
         ]}
     ],
     create: function() {

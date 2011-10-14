@@ -1,5 +1,5 @@
 enyo.kind({
-    name: "UbeCake.MainScreen", kind: enyo.VFlexBox, transitionKind: "enyo.transitions.LeftRightFlyin",
+    name: "Contraption.MainScreen", kind: enyo.VFlexBox, transitionKind: "enyo.transitions.LeftRightFlyin",
     published: {
       playDuration: "60",
       enforcePlayTimer: false,
@@ -11,7 +11,7 @@ enyo.kind({
     components: [
         {kind: "PageHeader",
         components: [
-            {name: "initialSetup", kind: "UbeCake.InitialSetup", lazy: "false", className: "enyo-dark",
+            {name: "initialSetup", kind: "Contraption.InitialSetup", lazy: "false", className: "enyo-dark",
                 onReceive: "preferencesReceived", onSave: "preferencesSaved"},
             {content: "Main Screen", flex: 1},
             {name: "resetButton", kind: "Button", content: "Back to Initial Setup", onclick: "loadInitialSetup"}

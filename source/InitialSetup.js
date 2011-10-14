@@ -1,5 +1,5 @@
 enyo.kind({
-    name: "UbeCake.InitialSetup", kind: "ModalDialog", style: "width: 600px",
+    name: "Contraption.InitialSetup", kind: "ModalDialog", style: "width: 600px",
     events: {
         onReceive: "",
         onSave: "",
