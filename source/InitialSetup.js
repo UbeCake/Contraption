@@ -106,10 +106,10 @@ enyo.kind({
         ]},
         {kind: "HFlexBox", align: "center",
         components: [
-            {kind: "Button", caption: "Huzzah! Let the duel commence!", className: "enyo-button-affirmative", 
-                onclick: "loadMainScreen", flex: 1},
             {name: "resetButton", kind: "Button", className: "enyo-button-negative", caption: "Reset to Defaults",
-                onclick: "resetToDefaults"}
+                onclick: "resetToDefaults"},
+            {kind: "Button", caption: "Huzzah! Let the duel commence!", className: "enyo-button-affirmative", 
+                onclick: "loadMainScreen", flex: 1}            
         ]},
     ],
     rendered: function() {
