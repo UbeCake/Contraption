@@ -46,6 +46,10 @@ enyo.kind({
             {content: "Player Two Health: &nbsp; "},
             {name: "playerTwoHealthText", content: "", flex: 1},
         ]},
+        {kind: "HFlexBox",
+        components: [
+            {name: "playTimer", kind: "Contraption.PlayTimer", lazy: "false"}
+        ]},
         {kind: "Button", caption: "(Main Screen Here)", onclick: ""},
     ],
     loadInitialSetup: function() {
@@ -74,6 +78,7 @@ enyo.kind({
         this.setPlayerTwoHealth( inPlayerTwoHealth );
         
         this.$.initialSetup.close();
+        this.$.playTimer.timerStart();
     },
     // update functions
     playDurationChanged: function() {
