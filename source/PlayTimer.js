@@ -2,45 +2,35 @@ enyo.kind({
     name: 'Contraption.PlayTimer',
     kind: 'enyo.Control',
     published: {
-        playTimerDuration: "60"
+        playTimerDuration: "15",
+        playTimerIntervalId: "0"
     },
     components: [
         {name: "playTimer", kind: "HFlexBox",
         components: [
-            {name: "playTimerAnimator", kind: enyo.Animator, easingFunc: enyo.easing.linear, duration: 60000,
-                tick: 1000, onBegin: "beginAnimation", onAnimate: "stepAnimation", onEnd: "endAnimation"},
             {name: "playTimerText", content: this.playTimerDuration}
         ]}
     ],
     create: function () {
         this.inherited(arguments);
         this.$.playTimerText.setContent( this.playTimerDuration );
-        this.$.playTimerAnimator.setDuration( 3000 );
     },
     timerStart: function () {
-        this.$.playTimerAnimator.play( 0, this.playTimerDuration );
+        this.playTimerIntervalId = setInterval( enyo.bind(this, this.incrementPlayTimer), 1000);
     },
-    timerEnd: function () {
-        this.$.playTimerAnimator.stop();
-    },
-    stepAnimation: function(inSender, inValue) {
-        this.playTimerCurrent = this.$.playTimerText.getContent();
-
-        this.playTimerNext = parseInt(this.playTimerCurrent) - 1;
-        enyo.log( "changing to: " + this.playTimerNext );
-
-        if ( this.playTimerNext < 0 ) {
-            enyo.log( "ENDING ANIMATION!???");
-            //this.endAnimation();
+    incrementPlayTimer: function () {
+        var timerInt = parseInt( this.$.playTimerText.getContent() );
+      
+        if ( timerInt <= 0 ) {
+            this.timerReset();
         }
-        
-        this.playTimerNext = (this.playTimerNext = 0 ? 0 : this.playTimerNext);
-        this.$.playTimerText.setContent( this.playTimerNext );
+        else {
+            this.$.playTimerText.setContent( timerInt - 1 );
+        }
     },
-    beginAnimation: function(inSender, inStart, inEnd) {
-        
-    },
-    endAnimation: function(inSender, inValue) {
-        enyo.log( "NOT STOPPING?!" );
+    timerReset: function () {
+        clearInterval( this.playTimerIntervalId );
+        this.$.playTimerText.setContent( this.playTimerDuration );
+        this.timerStart();
     }
-})
+});

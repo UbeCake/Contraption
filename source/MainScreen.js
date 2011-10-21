@@ -50,6 +50,7 @@ enyo.kind({
         components: [
             {name: "playTimer", kind: "Contraption.PlayTimer", lazy: "false"}
         ]},
+        {kind: "Button", caption: "Stop Timer Zomggg", onclick: "nextTurn"},
         {kind: "Button", caption: "(Main Screen Here)", onclick: ""},
     ],
     loadInitialSetup: function() {
@@ -79,6 +80,9 @@ enyo.kind({
         
         this.$.initialSetup.close();
         this.$.playTimer.timerStart();
+    },
+    nextTurn: function() {
+        this.$.playTimer.timerReset();
     },
     // update functions
     playDurationChanged: function() {
