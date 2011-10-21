@@ -16,11 +16,11 @@ enyo.kind({
         this.$.playTimerText.setContent( this.playTimerDuration );
     },
     timerStart: function () {
-        this.playTimerIntervalId = setInterval( enyo.bind(this, this.incrementPlayTimer), 1000);
+        this.playTimerIntervalId = setInterval( enyo.bind(this, this.incrementPlayTimer), 1000 );
     },
     incrementPlayTimer: function () {
         var timerInt = parseInt( this.$.playTimerText.getContent() );
-      
+
         if ( timerInt <= 0 ) {
             this.timerReset();
         }
