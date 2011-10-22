@@ -48,7 +48,10 @@ enyo.kind({
         ]},
         {kind: "HFlexBox",
         components: [
-            {name: "playTimer", kind: "Contraption.PlayTimer", lazy: "false"}
+            {name: "playTimer", kind: "Contraption.PlayTimer", lazy: "false", height: "50px", width: "50px",
+                align: "center", style: "-webkit-transition: all 0.5s ease-in-out"},
+            {name: "rainbowCircle", kind: "Image", src: "images/rainbow.png", onclick: "nextTurn",
+                style: "-webkit-transition: all 0.5s ease-in-out"}
         ]},
         {kind: "Button", caption: "Stop Timer Zomggg", onclick: "nextTurn"},
         {kind: "Button", caption: "(Main Screen Here)", onclick: ""},
@@ -79,7 +82,7 @@ enyo.kind({
         this.setPlayerTwoHealth( inPlayerTwoHealth );
         
         this.$.initialSetup.close();
-        this.$.playTimer.timerStart();
+        //this.$.playTimer.timerStart();
     },
     nextTurn: function() {
         this.$.playTimer.timerReset();

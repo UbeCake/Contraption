@@ -3,7 +3,8 @@ enyo.kind({
     kind: 'enyo.Control',
     published: {
         playTimerDuration: "15",
-        playTimerIntervalId: "0"
+        playTimerIntervalId: "0",
+        rotationDegrees: "360",
     },
     components: [
         {name: "playTimer", kind: "HFlexBox",
@@ -32,5 +33,9 @@ enyo.kind({
         clearInterval( this.playTimerIntervalId );
         this.$.playTimerText.setContent( this.playTimerDuration );
         this.timerStart();
+        
+        this.rotationDegrees = ( this.rotationDegrees == "360" ? "180" : "360" );
+        this.owner.$.rainbowCircle.applyStyle( "-webkit-transform", "rotate(" + this.rotationDegrees + "deg)" );
+        this.owner.$.playTimer.applyStyle( "-webkit-transform", "rotate(" + this.rotationDegrees + "deg)" );
     }
 });
