@@ -2,19 +2,21 @@ enyo.kind({
     name: 'Contraption.PlayTimer',
     kind: 'enyo.Control',
     published: {
-        playTimerDuration: "15",
-        playTimerIntervalId: "0",
-        rotationDegrees: "360",
+        playTimerDuration: 0,
+        playTimerIntervalId: 0,
+        rotationDegrees: 360,
     },
     components: [
-        {name: "playTimer", kind: "HFlexBox",
+        {kind: "HFlexBox",
         components: [
-            {name: "playTimerText", content: this.playTimerDuration}
-        ]}
+            {name: "playTimerText", lazy: "false", height: "20px", width: "20px",
+                style: "-webkit-transition: all 0.5s ease-in-out; position: absolute; left: 512px; top: 384px; z-index: 2"},
+            {name: "rainbowCircle", kind: "Image", src: "images/rainbow.png", onclick: "timerReset",
+                style: "-webkit-transition: all 0.5s ease-in-out; position: absolute; left: 387px; top: 259px; z-index: 1"}
+        ]},
     ],
     create: function () {
         this.inherited(arguments);
-        this.$.playTimerText.setContent( this.playTimerDuration );
     },
     timerStart: function () {
         this.playTimerIntervalId = setInterval( enyo.bind(this, this.incrementPlayTimer), 1000 );
@@ -35,7 +37,7 @@ enyo.kind({
         this.timerStart();
         
         this.rotationDegrees = ( this.rotationDegrees == "360" ? "180" : "360" );
-        this.owner.$.rainbowCircle.applyStyle( "-webkit-transform", "rotate(" + this.rotationDegrees + "deg)" );
-        this.owner.$.playTimer.applyStyle( "-webkit-transform", "rotate(" + this.rotationDegrees + "deg)" );
+        this.$.rainbowCircle.applyStyle( "-webkit-transform", "rotate(" + this.rotationDegrees + "deg)" );
+        this.$.playTimerText.applyStyle( "-webkit-transform", "rotate(" + this.rotationDegrees + "deg)" );
     }
 });

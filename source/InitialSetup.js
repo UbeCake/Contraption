@@ -6,12 +6,12 @@ enyo.kind({
         onCancel: ""
     },
     published: {
-        defaultPlayDuration: "60",
+        defaultPlayDuration: 60,
         defaultEnforcePlayTimer: false,
-        defaultRoundDuration: "0",
+        defaultRoundDuration: 0,
         defaultEnforceRoundTimer: false,
-        defaultPlayerOneHealth: "20",
-        defaultPlayerTwoHealth: "20"
+        defaultPlayerOneHealth: 20,
+        defaultPlayerTwoHealth: 20
     },
     components: [
         {name: "getPreferencesCall", kind: "PalmService", service: "palm://com.palm.systemservice/",
@@ -52,14 +52,14 @@ enyo.kind({
                     onChange: "setRoundDuration",
                     items: [
                         {caption: "Do not use a round timer", value: "0"},
-                        {caption: "10 minutes", value: "10"},
-                        {caption: "20 minutes", value: "20"},
-                        {caption: "30 minutes", value: "30"},
-                        {caption: "40 minutes", value: "40"},
-                        {caption: "50 minutes (tournament)", value: "50"},
-                        {caption: "1 hour", value: "60"},
-                        {caption: "1 hour 15 minutes", value: "75"},
-                        {caption: "1 hour 30 minutes", value: "90"}
+                        {caption: "10 minutes", value: "600"},
+                        {caption: "20 minutes", value: "1200"},
+                        {caption: "30 minutes", value: "1800"},
+                        {caption: "40 minutes", value: "2400"},
+                        {caption: "50 minutes (tournament)", value: "3000"},
+                        {caption: "1 hour", value: "3600"},
+                        {caption: "1 hour 15 minutes", value: "4500"},
+                        {caption: "1 hour 30 minutes", value: "5400"}
                 ]}
             ]},
             {kind: "HFlexBox", align: "center",
@@ -136,13 +136,13 @@ enyo.kind({
             inResponse.playerOneHealth, inResponse.playerTwoHealth );
     },
     getPreferencesFailure: function(inSender, inResponse) {
-        enyo.log( "got failure from getPreferences" );
+        //enyo.log( "got failure from getPreferences" );
     },
     setPreferencesSuccess: function(inSender, inResponse) {
-        enyo.log( "got success from setPreferences" );
+        //enyo.log( "got success from setPreferences" );
     },
     setPreferencesFailure: function(inSender, inResponse) {
-        enyo.log( "got failure from setPreferences" );
+        //enyo.log( "got failure from setPreferences" );
     },
     resetToDefaults: function() {
         this.$.playDuration.setValue( this.defaultPlayDuration );

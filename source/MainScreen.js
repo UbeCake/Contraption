@@ -1,19 +1,24 @@
 enyo.kind({
     name: "Contraption.MainScreen", kind: enyo.VFlexBox, transitionKind: "enyo.transitions.LeftRightFlyin",
     published: {
-      playDuration: "60",
+      playDuration: 60,
       enforcePlayTimer: false,
-      roundDuration: "0",
+      roundDuration: 0,
       enforceRoundTimer: false,
-      playerOneHealth: "20",
-      playerTwoHealth: "20"
+      playerOneHealth: 20,
+      playerTwoHealth: 20
     },
     components: [
-        {kind: "PageHeader",
+        {kind: "Image", src: "images/fill_top.png",
+            style: "position: absolute; top: 0px; left: 0px; z-index: -1;"},
+        {kind: "Image", src: "images/fill_bottom.png",
+            style: "position: absolute; top: 363px; left: 0px; z-index: -1;"},
+        {kind: "Contraption.RoundTimer", lazy: "false"},
+        {kind: "Contraption.PlayTimer"},
+        {kind: "HFlexBox",
         components: [
-            {name: "initialSetup", kind: "Contraption.InitialSetup", lazy: "false", className: "enyo-dark",
+            {name: "initialSetup", kind: "Contraption.InitialSetup", lazy: "false", 
                 onReceive: "preferencesReceived", onSave: "preferencesSaved"},
-            {content: "Main Screen", flex: 1},
             {name: "resetButton", kind: "Button", content: "Back to Initial Setup", onclick: "loadInitialSetup"}
         ]},
         {kind: "HFlexBox",
@@ -46,15 +51,6 @@ enyo.kind({
             {content: "Player Two Health: &nbsp; "},
             {name: "playerTwoHealthText", content: "", flex: 1},
         ]},
-        {kind: "HFlexBox",
-        components: [
-            {name: "playTimer", kind: "Contraption.PlayTimer", lazy: "false", height: "50px", width: "50px",
-                align: "center", style: "-webkit-transition: all 0.5s ease-in-out"},
-            {name: "rainbowCircle", kind: "Image", src: "images/rainbow.png", onclick: "nextTurn",
-                style: "-webkit-transition: all 0.5s ease-in-out"}
-        ]},
-        {kind: "Button", caption: "Stop Timer Zomggg", onclick: "nextTurn"},
-        {kind: "Button", caption: "(Main Screen Here)", onclick: ""},
     ],
     loadInitialSetup: function() {
         //this.owner.$.contraptionContainer.selectViewByName("initialSetup");
@@ -63,6 +59,7 @@ enyo.kind({
     rendered: function() {
         this.$.initialSetup.openAtCenter();
     },
+    
     // got preferences from the db, let's set our local vars to their values
     preferencesReceived: function(inSender, inDefaultPlayDuration, inDefaultEnforcePlayTimer, inDefaultRoundDuration, inDefaultEnforceRoundTimer, inDefaultPlayerOneHealth, inDefaultPlayerTwoHealth) {
         this.setPlayDuration( inDefaultPlayDuration );
@@ -82,12 +79,13 @@ enyo.kind({
         this.setPlayerTwoHealth( inPlayerTwoHealth );
         
         this.$.initialSetup.close();
-        //this.$.playTimer.timerStart();
+        
+        this.$.playTimer.setPlayTimerDuration( inPlayDuration );
+        this.$.roundTimer.setRoundTimerDuration( inRoundDuration );
+        this.$.roundTimer.timerStart();
     },
-    nextTurn: function() {
-        this.$.playTimer.timerReset();
-    },
-    // update functions
+
+    // preferences update functions
     playDurationChanged: function() {
         this.$.playDurationText.setContent( this.playDuration );
     },

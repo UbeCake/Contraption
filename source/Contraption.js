@@ -8,6 +8,8 @@ enyo.kind({
     ],
     create: function() {
         this.inherited(arguments);
+        enyo.setFullScreen(true);
+        enyo.setAllowedOrientation( "landscape" );
     },
     ready: function() {
         this.$.contraptionContainer.selectViewByName("mainScreen");
