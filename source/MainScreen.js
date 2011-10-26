@@ -15,6 +15,7 @@ enyo.kind({
             style: "position: absolute; top: 363px; left: 0px; z-index: -1;"},
         {kind: "Contraption.RoundTimer", lazy: "false"},
         {kind: "Contraption.PlayTimer"},
+        {name: "duelBegin", kind: "Sound", src: "audio/11220__jnr-hacksaw__ultrasound-boom.wav"},
         {kind: "HFlexBox",
         components: [
             {name: "initialSetup", kind: "Contraption.InitialSetup", lazy: "false", 
@@ -78,6 +79,7 @@ enyo.kind({
         this.setPlayerOneHealth( inPlayerOneHealth );
         this.setPlayerTwoHealth( inPlayerTwoHealth );
         
+        this.$.duelBegin.play();
         this.$.initialSetup.close();
         
         this.$.playTimer.setPlayTimerDuration( inPlayDuration );
