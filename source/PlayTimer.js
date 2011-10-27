@@ -2,6 +2,7 @@ enyo.kind({
     name: 'Contraption.PlayTimer',
     kind: 'enyo.Control',
     published: {
+        enforcePlayTimer: false,
         playTimerDuration: 0,
         playTimerIntervalId: 0,
         rotationDegrees: 360,

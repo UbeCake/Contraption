@@ -2,6 +2,7 @@ enyo.kind({
     name: 'Contraption.RoundTimer',
     kind: 'enyo.Control',
     published: {
+        enforceRoundTimer: false,
         roundTimerDuration: 0,
         roundTimerIntervalId: 0,
         progressBarWidth: 0,

@@ -14,8 +14,9 @@ enyo.kind({
         {kind: "Image", src: "images/fill_bottom.png",
             style: "position: absolute; top: 363px; left: 0px; z-index: -1;"},
         {kind: "Contraption.RoundTimer", lazy: "false"},
-        {kind: "Contraption.PlayTimer"},
+        {kind: "Contraption.PlayTimer", lazy: "false"},
         {name: "duelBegin", kind: "Sound", src: "audio/11220__jnr-hacksaw__ultrasound-boom.wav"},
+        
         {kind: "HFlexBox",
         components: [
             {name: "initialSetup", kind: "Contraption.InitialSetup", lazy: "false", 
@@ -42,11 +43,10 @@ enyo.kind({
             {content: "Enforce Round Timer: &nbsp; "},
             {name: "enforceRoundTimerText", content: "", flex: 1},
         ]},
-        {kind: "HFlexBox",
-        components: [
-            {content: "Player One Health: &nbsp; "},
-            {name: "playerOneHealthText", content: "", flex: 1},
-        ]},
+        {name: "playerOneHealthWidget", kind: "Contraption.HealthCounter", lazy: "false",
+            style: "position: absolute; top: 500px; left: 100px;"},
+        {name: "playerTwoHealthWidget", kind: "Contraption.HealthCounter", lazy: "false",
+            style: "position: absolute; top: 200px; left: 800px; -webkit-transform: rotate(180deg)"},
         {kind: "HFlexBox",
         components: [
             {content: "Player Two Health: &nbsp; "},
@@ -82,6 +82,11 @@ enyo.kind({
         this.$.duelBegin.play();
         this.$.initialSetup.close();
         
+        this.$.playerOneHealthWidget.setStartingHealth( inPlayerOneHealth );
+        this.$.playerOneHealthWidget.setHealthValue( inPlayerOneHealth );
+        this.$.playerTwoHealthWidget.setStartingHealth( inPlayerTwoHealth );
+        this.$.playerTwoHealthWidget.setHealthValue( inPlayerTwoHealth );
+        
         this.$.playTimer.setPlayTimerDuration( inPlayDuration );
         this.$.roundTimer.setRoundTimerDuration( inRoundDuration );
         this.$.roundTimer.timerStart();
@@ -89,21 +94,21 @@ enyo.kind({
 
     // preferences update functions
     playDurationChanged: function() {
-        this.$.playDurationText.setContent( this.playDuration );
+        this.$.playTimer.setPlayTimerDuration( this.playDuration );
     },
     enforcePlayTimerChanged: function() {
-        this.$.enforcePlayTimerText.setContent( this.enforcePlayTimer ? "true" : "false" );
+        this.$.playTimer.setEnforcePlayTimer( this.enforcePlayTimer ? true : false );
     },
     roundDurationChanged: function() {
-        this.$.roundDurationText.setContent( this.roundDuration );
+        this.$.roundTimer.setRoundTimerDuration( this.roundDuration );
     },
     enforceRoundTimerChanged: function() {
-        this.$.enforceRoundTimerText.setContent( this.enforceRoundTimer ? "true" : "false" );
+        this.$.roundTimer.setEnforceRoundTimer( this.enforceRoundTimer ? true : false );
     },
     playerOneHealthChanged: function() {
-        this.$.playerOneHealthText.setContent( this.playerOneHealth );
+        this.$.playerOneHealthWidget.setHealthValue( this.playerOneHealth );
     },
     playerTwoHealthChanged: function() {
-        this.$.playerTwoHealthText.setContent( this.playerTwoHealth );
+        this.$.playerTwoHealthWidget.setHealthValue( this.playerTwoHealth );
     }
 });
