@@ -5,8 +5,8 @@ enyo.kind({
       enforcePlayTimer: false,
       roundDuration: 0,
       enforceRoundTimer: false,
-      playerOneHealth: 20,
-      playerTwoHealth: 20
+      playerOneHealth: 0,
+      playerTwoHealth: 0
     },
     components: [
         {kind: "Image", src: "images/fill_top.png",
@@ -23,38 +23,12 @@ enyo.kind({
                 onReceive: "preferencesReceived", onSave: "preferencesSaved"},
             {name: "resetButton", kind: "Button", content: "Back to Initial Setup", onclick: "loadInitialSetup"}
         ]},
-        {kind: "HFlexBox",
-        components: [
-            {content: "Play Duration: &nbsp; "},
-            {name: "playDurationText", content: "", flex: 1},
-        ]},
-        {kind: "HFlexBox",
-        components: [
-            {content: "Enforce Play Timer: &nbsp; "},
-            {name: "enforcePlayTimerText", content: "", flex: 1},
-        ]},
-        {kind: "HFlexBox",
-        components: [
-            {content: "Round Duration: &nbsp; "},
-            {name: "roundDurationText", content: "", flex: 1},
-        ]},
-        {kind: "HFlexBox",
-        components: [
-            {content: "Enforce Round Timer: &nbsp; "},
-            {name: "enforceRoundTimerText", content: "", flex: 1},
-        ]},
         {name: "playerOneHealthWidget", kind: "Contraption.HealthCounter", lazy: "false",
             style: "position: absolute; top: 500px; left: 100px;"},
         {name: "playerTwoHealthWidget", kind: "Contraption.HealthCounter", lazy: "false",
-            style: "position: absolute; top: 200px; left: 800px; -webkit-transform: rotate(180deg)"},
-        {kind: "HFlexBox",
-        components: [
-            {content: "Player Two Health: &nbsp; "},
-            {name: "playerTwoHealthText", content: "", flex: 1},
-        ]},
+            style: "position: absolute; top: 200px; left: 800px; -webkit-transform: rotate(180deg)"}
     ],
     loadInitialSetup: function() {
-        //this.owner.$.contraptionContainer.selectViewByName("initialSetup");
         this.$.initialSetup.openAtCenter();
     },
     rendered: function() {

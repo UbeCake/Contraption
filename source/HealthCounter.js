@@ -2,8 +2,8 @@ enyo.kind({
     name: 'Contraption.HealthCounter',
     kind: 'enyo.Control',
     published: {
-        healthValue: 20,
-        startingHealth: 20
+        healthValue: 0,
+        startingHealth: 0
     },
     components: [
         {kind: "HFlexBox",
