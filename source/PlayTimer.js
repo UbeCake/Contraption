@@ -15,7 +15,8 @@ enyo.kind({
             {name: "rainbowCircle", kind: "Image", src: "images/rainbow.png", onclick: "timerReset",
                 style: "-webkit-transition: all 0.8s ease-in-out; position: absolute; left: 387px; top: 259px; z-index: 1"}
         ]},
-        {name: "windingSound", kind: "Sound", src: "audio/49214__tombola__fisher-price3.wav"}
+        {name: "windingSound", kind: "Sound", src: "audio/49214__tombola__fisher-price3.wav"},
+        {name: "chimeSound", kind: "Sound", src: "audio/12863__schluppipuppie__ping-02.wav"}
     ],
     create: function () {
         this.inherited(arguments);
@@ -27,7 +28,12 @@ enyo.kind({
         var timerInt = parseInt( this.$.playTimerText.getContent() );
 
         if ( timerInt <= 0 ) {
-            this.timerReset();
+            if ( this.enforcePlayTimer == true ) {
+                this.timerReset();
+            }
+            else {
+                this.$.chimeSound.play();
+            }
         }
         else {
             this.$.playTimerText.setContent( timerInt - 1 );
